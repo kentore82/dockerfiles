@@ -21,6 +21,9 @@ for ((i=0;i<${#hosts[@]};++i)); do
   # Update Ansible hostfiles
   sed -i "/ip:/c\ip: $IP" ${host_file_path}/${ansible_host_file[i]}
 
+  # Clear ssh-known hosts
+  ssh-keygen -f ~/.ssh/known_hosts -R $IP
+
 done
 
 
