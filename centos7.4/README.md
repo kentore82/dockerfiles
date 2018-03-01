@@ -1,8 +1,8 @@
 # Howto:
 
 ```
-$ docker build --rm -t kentore82/ubuntu16.04:base .
-$ docker run -d kentore82/ubuntu16.04:base
+$ docker build --rm -t kentore82/centos7.4:base .
+$ docker run -d kentore82/centos7.4:base
 
 # Get container IP:
 $ docker container list
