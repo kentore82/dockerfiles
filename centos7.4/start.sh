@@ -17,6 +17,11 @@ chown $USER:$USER -R /home/$USER/.ssh
 chmod 700 /home/$USER/.ssh
 chmod 600 /home/$USER/.ssh/authorized_keys
 
+mkdir /root/.ssh
+echo $SSH_USER_PUB_KEY > /root/.ssh/authorized_keys
+chmod 700 /root/.ssh
+chmod 600 /root/.ssh/authorized_keys
+
 echo -e "$SSH_USERPASS\n$SSH_USERPASS" | (passwd --stdin $USER)
 echo ssh user password: $SSH_USERPASS
 }
