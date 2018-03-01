@@ -1,6 +1,6 @@
 ---
 host: kb1
-ip: 172.17.0.2 
+ip: 172.17.0.3
 lan: eth0
 user: deployer
 deploy_user: "{{ login_deploy_user }}"

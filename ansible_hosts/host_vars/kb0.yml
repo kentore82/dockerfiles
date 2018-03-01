@@ -1,6 +1,6 @@
 ---
 host: kb0
-ip: "{{ router_default_gw }}"
+ip: 172.17.0.2
 wan: eth1
 lan: eth0
 user: root
