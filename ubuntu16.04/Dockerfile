@@ -3,7 +3,7 @@ MAINTAINER Ken Tore Tallakstad "https://github.com/kentore82"
 
 RUN apt-get update
 
-RUN apt-get install -y openssh-server
+RUN apt-get install -y openssh-server python2.7 python2.7-dev
 RUN mkdir /var/run/sshd
 
 ADD ./start.sh /start.sh

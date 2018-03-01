@@ -3,10 +3,10 @@ host: kb0
 ip: "{{ router_default_gw }}"
 wan: eth1
 lan: eth0
-user: deployer
+user: root
 deploy_user: "{{ login_deploy_user }}"
-ssh_pub: ""
-ssh_priv: ""
+ssh_pub: ~/pems/docker/ansibletest_rsa.pub
+ssh_priv: ~/pems/docker/ansibletest_rsa
 os: ubuntu16.04
 
 ansible_host: "{{ ip }}"

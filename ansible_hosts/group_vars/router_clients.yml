@@ -1,6 +1,6 @@
 ---
 router_client_lan: "{{ lan }}"
-login_deploy_user: root
+login_deploy_user: deployer 
 
 
 
