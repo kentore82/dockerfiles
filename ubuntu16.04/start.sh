@@ -11,6 +11,10 @@ mkdir /$USER/.ssh
 echo $SSH_USER_PUB_KEY > /$USER/.ssh/authorized_keys
 chmod 700 /$USER/.ssh
 chmod 600 /$USER/.ssh/authorized_keys
+
+# Set python
+cp /usr/bin/python2.7 /usr/bin/python
+chmod u+x /usr/bin/python
 }
 
 # Call all functions
