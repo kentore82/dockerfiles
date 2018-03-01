@@ -1,0 +1,12 @@
+---
+host: kb0
+ip: "{{ router_default_gw }}"
+wan: eth1
+lan: eth0
+user: deployer
+deploy_user: "{{ login_deploy_user }}"
+ssh_pub: ""
+ssh_priv: ""
+os: ubuntu16.04
+
+ansible_host: "{{ ip }}"

@@ -1,0 +1,11 @@
+---
+host: kb2
+ip: 172.17.0.7 
+lan: eth0
+user: deployer
+deploy_user: "{{ login_deploy_user }}"
+ssh_pub: ~/pems/docker/ansibletest_rsa.pub
+ssh_priv: ~/pems/docker/ansibletest_rsa
+os: centos7.4
+
+ansible_host: "{{ ip }}"
