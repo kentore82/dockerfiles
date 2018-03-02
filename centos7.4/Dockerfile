@@ -17,7 +17,7 @@ ENV container docker
 
 RUN yum -y update; yum clean all
 
-RUN yum -y swap -- remove systemd-container systemd-container-libs -- install systemd systemd-libs dbus fsck.ext4 passwd sudo
+RUN yum -y swap -- remove systemd-container systemd-container-libs -- install systemd systemd-libs dbus fsck.ext4 passwd sudo vim
 
 RUN yum clean all
 
@@ -47,11 +47,13 @@ RUN ssh-keygen -q -f /etc/ssh/ssh_host_rsa_key -N '' -t rsa && \
     ssh-keygen -q -f /etc/ssh/ssh_host_ecdsa_key -N '' -t ecdsa && \
     ssh-keygen -q -f /etc/ssh/ssh_host_ed25519_key -N '' -t ed25519
 RUN echo 'root:root' | chpasswd
-RUN systemctl enable sshd.service
 
-# firewalld needs this .. and I needs my firewalld
+# emable dbus, hostname, sshd service
 ADD dbus.service /etc/systemd/system/dbus.service
 RUN systemctl enable dbus.service
+RUN systemctl enable systemd-hostnamed.service
+RUN systemctl enable sshd.service
+
 
 VOLUME [ "/sys/fs/cgroup" ]
 VOLUME ["/run"]
@@ -59,6 +61,8 @@ VOLUME ["/run"]
 RUN chmod 755 /start.sh
 RUN ./start.sh
 
+# expose all app ports and ssh system port
+EXPOSE 1001-65535
 EXPOSE 22
 
 CMD ["/usr/sbin/init"]

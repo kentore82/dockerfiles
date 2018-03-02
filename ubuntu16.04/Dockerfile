@@ -4,7 +4,7 @@ FROM ubuntu:16.04
 # and then heavily modified and hacked like crazy
 
 # we're going to want this bad boy installed so we can connect :)
-RUN apt-get update && apt-get install -y ssh python2.7 python2.7-dev dbus
+RUN apt-get update && apt-get install -y ssh python2.7 python2.7-dev dbus iputils-ping vim
 
 ADD init-fake.conf /etc/init/fake-container-events.conf
 ADD ./start.sh /start.sh
