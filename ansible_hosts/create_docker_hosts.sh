@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # Pull images
-#docker pull kentore82/centos7.4:base
-#docker pull kentore82/ubuntu16.04:base
+docker pull kentore82/centos7.4:base
+docker pull kentore82/ubuntu16.04:base
 
-hosts=( "ansible-utility" "ansible-gateway" "ansible-data" )
+hosts=( "ansible-utility" "ansible-gateway" "ansible-master" "ansible-data0" )
 os="centos7.4:base"
 
-ansible_host_file=( "kb1" "kb2" "kb3" )
+ansible_host_file=( "kb1" "kb2" "kb3" "kb4" )
 
 # get domain from ansible inventory
 out=$(cat ./hosts.yml |grep domain:)
