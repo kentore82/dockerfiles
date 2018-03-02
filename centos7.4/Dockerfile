@@ -17,7 +17,7 @@ ENV container docker
 
 RUN yum -y update; yum clean all
 
-RUN yum -y swap -- remove systemd-container systemd-container-libs -- install systemd systemd-libs dbus fsck.ext4 passwd sudo vim
+RUN yum -y swap -- remove systemd-container systemd-container-libs -- install systemd systemd-libs dbus fsck.ext4 passwd sudo vim initscripts
 
 RUN yum clean all
 
