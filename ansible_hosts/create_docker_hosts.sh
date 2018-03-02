@@ -41,7 +41,7 @@ for ((i=0;i<${#hosts[@]};++i)); do
   # Get container IP
   IP=$(docker inspect ${hosts[i]}|grep "\"IPAddress\": "|grep -Eo '[-1-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}'|head -n1)
   
-  echo Updating Ansible host var file ${ansible_host_file[i]}
+  echo Updating Ansible host var file host_vars/${ansible_host_file[i]}.yml
   # Update Ansible hostfiles
   sed -i "/ip:/c\ip: $IP" ${host_file_path}/${ansible_host_file[i]}.yml
 
