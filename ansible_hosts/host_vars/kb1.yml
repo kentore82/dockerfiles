@@ -2,7 +2,7 @@
 host: kb1
 ip: 172.17.0.3
 lan: eth0
-user: deployer
+user: root
 deploy_user: "{{ login_deploy_user }}"
 ssh_pub: ~/pems/docker/ansibletest_rsa.pub
 ssh_priv: ~/pems/docker/ansibletest_rsa

@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Pull images
-docker pull kentore82/centos7.4:base
-docker pull kentore82/ubuntu16.04:base
+#docker pull kentore82/centos7.4:base
+#docker pull kentore82/ubuntu16.04:base
 
 hosts=( "ansible-router" "ansible-utility" "ansible-gateway" "ansible-data" )
 os=( "ubuntu16.04:base" "centos7.4:base" "centos7.4:base" "centos7.4:base" )
@@ -12,7 +12,7 @@ host_file_path=./host_vars
 
 for ((i=0;i<${#hosts[@]};++i)); do
   echo Launching ${hosts[i]}-node on ${os[i]}
-  docker run -d --name ${hosts[i]} kentore82/${os[i]}
+  docker run -d --cap-add SYS_ADMIN --security-opt seccomp:unconfined -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v /tmp/$(mktemp -d):/run --name ${hosts[i]} kentore82/${os[i]}
   
   # Get container IP
   IP=$(docker inspect ${hosts[i]}|grep "\"IPAddress\": "|grep -Eo '[-1-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}'|head -n1)
