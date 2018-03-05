@@ -9,10 +9,23 @@ This is really useful for Ansible testing.
 Push container to remote:
 ```bash
 # Save container to image
-docker commit -a "Ken Tore Tallakstad tallakstad@gmail.com" -m "message" <containerID> kentore82/repo:tag
+docker commit -a "Ken Tore Tallakstad tallakstad@gmail.com" \
+              -m "message" <containerID> kentore82/repo:tag
 
 # Push remote
 docker push kentore82/repo:tag
 
 
+```
+
+## Docker UI management tool
+
+DEPLOY PORTAINER
+Use the following Docker commands to deploy Portainer:
+
+```bash
+$ docker volume create portainer_data
+$ docker run -d -p 9000:9000 \
+             -v /var/run/docker.sock:/var/run/docker.sock \
+             -v portainer_data:/data portainer/portainer
 ```
