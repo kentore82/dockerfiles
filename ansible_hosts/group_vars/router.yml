@@ -1,7 +1,0 @@
----
-login_deploy_user: deployer
-router_private_ip: "{{ ip }}"
-router_fqdn: "{{ host + '.' + domain }}"
-router_domain: "{{ domain }}"
-router_wan: "{{ wan }}"
-router_lan: "{{ lan }}"
