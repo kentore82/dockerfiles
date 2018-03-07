@@ -61,8 +61,7 @@ VOLUME ["/run"]
 RUN chmod 755 /start.sh
 RUN ./start.sh
 
-# expose all app ports and ssh system port
-EXPOSE 1001-65535
+# expose ssh system port
 EXPOSE 22
 
 CMD ["/usr/sbin/init"]
