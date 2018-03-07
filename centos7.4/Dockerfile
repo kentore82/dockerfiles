@@ -43,6 +43,10 @@ RUN systemctl mask dev-mqueue.mount dev-hugepages.mount \
 
 RUN yum -y install openssh-server sudo openssh-clients
 RUN sed -i 's/#PermitRootLogin no/PermitRootLogin yes/' /etc/ssh/sshd_config
+
+# set UseDNS=no so avooid slow ssh login
+RUN sed -i 's/#UseDNS yes/UseDNS no/' /etc/ssh/sshd_config
+
 RUN ssh-keygen -q -f /etc/ssh/ssh_host_rsa_key -N '' -t rsa && \
     ssh-keygen -q -f /etc/ssh/ssh_host_ecdsa_key -N '' -t ecdsa && \
     ssh-keygen -q -f /etc/ssh/ssh_host_ed25519_key -N '' -t ed25519
