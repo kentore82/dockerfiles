@@ -1,0 +1,16 @@
+# make sure geojson CRS is urn:ogc:def:crs:OGC:1.3:CRS84
+# make sure to reduce size of geojson so something in th 1 KB range
+curl https://raw.githubusercontent.com/creationix/nvm/v0.13.1/install.sh | bash
+source ~/.bash_profile
+
+cd ../incubator-superset-0.26.3/superset/assets
+npm install -g yarn
+yarn install
+npm run prod
+
+pip3.5 install superset 
+# pip3.5 install ./superset/setup.py
+
+# To copy in place newlt built js-binaries to existing Superset install.
+rm -rf /usr/lib/python3.5/site-packages/superset/static/assets/dist
+cp -r dist /usr/lib/python3.5/site-packages/superset/static/assets/
