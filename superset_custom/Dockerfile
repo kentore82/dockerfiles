@@ -28,6 +28,7 @@ RUN useradd -U -m superset && \
     apt-get install -y \
         build-essential \
         curl \
+        wget \
         tar \
         default-libmysqlclient-dev \
         freetds-dev \
@@ -42,7 +43,7 @@ RUN useradd -U -m superset && \
     rm -r /var/lib/apt/lists/* && \
     
     # Download custom superset repo
-    curl https://github.com/${SUPERSET_REPO}/archive/${SUPERSET_VERSION}.tar.gz -o ${SUPERSET_VERSION}.tar.gz && \
+    wget https://github.com/${SUPERSET_REPO}/archive/${SUPERSET_VERSION}.tar.gz -O ${SUPERSET_VERSION}.tar.gz && \
     tar -xf ${SUPERSET_VERSION}.tar.gz && \
     npm install -g yarn && \
     
