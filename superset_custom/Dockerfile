@@ -1,7 +1,7 @@
 FROM python:3.6
 
 # Superset version
-ARG SUPERSET_VERSION=0.29.0rc7
+ARG SUPERSET_VERSION=0.32.0rc2
 
 # Configure environment
 ENV GUNICORN_BIND=0.0.0.0:8088 \
@@ -23,10 +23,12 @@ RUN useradd -U -m superset && \
     mkdir ${SUPERSET_HOME} && \
     chown -R superset:superset /etc/superset && \
     chown -R superset:superset ${SUPERSET_HOME} && \
+    curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
     apt-get update && \
     apt-get install -y \
         build-essential \
         curl \
+        tar \
         default-libmysqlclient-dev \
         freetds-dev \
         freetds-bin \
@@ -34,10 +36,16 @@ RUN useradd -U -m superset && \
         libldap2-dev \
         libpq-dev \
         libsasl2-dev \
-        libssl1.0 && \
+        libssl1.0 \
+        npm && \
     apt-get clean && \
     rm -r /var/lib/apt/lists/* && \
-    curl https://raw.githubusercontent.com/${SUPERSET_REPO}/${SUPERSET_VERSION}/requirements.txt -o requirements.txt && \
+    
+    # Download custom superset repo
+    curl https://github.com/${SUPERSET_REPO}/archive/${SUPERSET_VERSION}.tar.gz -o ${SUPERSET_VERSION}.tar.gz && \
+    tar -xf ${SUPERSET_VERSION}.tar.gz && \
+    npm install -g yarn && \
+    
     pip install --no-cache-dir -r requirements.txt && \
     pip install --no-cache-dir \
         Werkzeug==0.14.1 \
@@ -56,9 +64,12 @@ RUN useradd -U -m superset && \
         pymssql==2.1.3 \
         redis==2.10.5 \
         sqlalchemy-clickhouse==0.1.5.post0 \
-        sqlalchemy-redshift==0.7.1 \
-        superset==${SUPERSET_VERSION} && \
-    rm requirements.txt
+        sqlalchemy-redshift==0.7.1 && \
+
+# Build JS frontend
+WORKDIR ./incubator-superset-${SUPERSET_VERSION}/superset/assets
+RUN yarn install && \
+    npm run prod && \
 
 # Configure Filesystem
 COPY superset /usr/local/bin
@@ -71,4 +82,5 @@ WORKDIR /home/superset
 EXPOSE 8088
 HEALTHCHECK CMD ["curl", "-f", "http://localhost:8088/health"]
 CMD ["gunicorn", "superset:app"]
+#CMD ["/bin/bash"]
 USER superset
