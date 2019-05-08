@@ -47,7 +47,7 @@ RUN useradd -U -m superset && \
     tar -xf ${SUPERSET_VERSION}.tar.gz && \
     npm install -g yarn && \
     
-    pip install --no-cache-dir -r requirements.txt && \
+    pip install --no-cache-dir -r ./incubator-superset-${SUPERSET_VERSION}/requirements.txt && \
     pip install --no-cache-dir \
         Werkzeug==0.14.1 \
         flask-cors==3.0.3 \
