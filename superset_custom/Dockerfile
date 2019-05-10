@@ -45,9 +45,8 @@ RUN useradd -U -m superset && \
     # Download custom superset repo
     wget https://github.com/${SUPERSET_REPO}/archive/${SUPERSET_VERSION}.tar.gz -O ${SUPERSET_VERSION}.tar.gz && \
     tar -xf ${SUPERSET_VERSION}.tar.gz && \
-    npm install -g yarn && \
+    #npm install -g yarn && \
     
-    pip install --no-cache-dir -r ./incubator-superset-${SUPERSET_VERSION}/requirements.txt && \
     pip install --no-cache-dir \
         Werkzeug==0.14.1 \
         flask-cors==3.0.3 \
@@ -65,12 +64,18 @@ RUN useradd -U -m superset && \
         pymssql==2.1.3 \
         redis==2.10.5 \
         sqlalchemy-clickhouse==0.1.5.post0 \
-        sqlalchemy-redshift==0.7.1 && \
+        sqlalchemy-redshift==0.7.1
 
+# move superset install after js is ok.
 # Build JS frontend
 WORKDIR ./incubator-superset-${SUPERSET_VERSION}/superset/assets
-RUN yarn install && \
-    npm run prod && \
+RUN npm ci && \
+    npm run build
+#RUN yarn install && \
+#    npm run prod && \
+
+WORKDIR ../../../
+RUN pip install --no-cache-dir ./incubator-superset-${SUPERSET_VERSION}
 
 # Configure Filesystem
 COPY superset /usr/local/bin
