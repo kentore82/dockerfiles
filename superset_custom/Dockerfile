@@ -1,7 +1,7 @@
 FROM python:3.6
 
 # Superset version
-ARG SUPERSET_VERSION=0.32.0rc2
+ARG SUPERSET_VERSION=0.33.0rc1
 
 # Configure environment
 ENV GUNICORN_BIND=0.0.0.0:8088 \
@@ -13,6 +13,7 @@ ENV GUNICORN_BIND=0.0.0.0:8088 \
     LC_ALL=C.UTF-8 \
     PYTHONPATH=/etc/superset:/home/superset:$PYTHONPATH \
     SUPERSET_REPO=apache/incubator-superset \
+# SherpaConsulting/incubator-superset \
     SUPERSET_VERSION=${SUPERSET_VERSION} \
     SUPERSET_HOME=/var/lib/superset
 ENV GUNICORN_CMD_ARGS="--workers ${GUNICORN_WORKERS} --timeout ${GUNICORN_TIMEOUT} --bind ${GUNICORN_BIND} --limit-request-line ${GUNICORN_LIMIT_REQUEST_LINE} --limit-request-field_size ${GUNICORN_LIMIT_REQUEST_FIELD_SIZE}"
@@ -45,10 +46,8 @@ RUN useradd -U -m superset && \
     # Download custom superset repo
     wget https://github.com/${SUPERSET_REPO}/archive/${SUPERSET_VERSION}.tar.gz -O ${SUPERSET_VERSION}.tar.gz && \
     tar -xf ${SUPERSET_VERSION}.tar.gz && \
-    #npm install -g yarn && \
-    
+    pip install --no-cache-dir -r ./incubator-superset-${SUPERSET_VERSION}/requirements.txt && \
     pip install --no-cache-dir \
-        Werkzeug==0.14.1 \
         flask-cors==3.0.3 \
         flask-mail==0.9.1 \
         flask-oauth==0.12 \
@@ -58,7 +57,6 @@ RUN useradd -U -m superset && \
         infi.clickhouse-orm==1.0.2 \
         mysqlclient==1.3.7 \
         psycopg2==2.6.1 \
-        pyathena==1.2.5 \
         pyhive==0.5.1 \
         pyldap==2.4.28 \
         pymssql==2.1.3 \
@@ -70,15 +68,18 @@ RUN useradd -U -m superset && \
 # Build JS frontend
 WORKDIR ./incubator-superset-${SUPERSET_VERSION}/superset/assets
 RUN npm ci && \
-    npm run build
-#RUN yarn install && \
-#    npm run prod && \
+    npm run build && \
+    rm -rf node_modules
 
 WORKDIR ../../../
-RUN pip install --no-cache-dir ./incubator-superset-${SUPERSET_VERSION}
+RUN pip install --no-cache-dir ./incubator-superset-${SUPERSET_VERSION} 
 
 # Configure Filesystem
 COPY superset /usr/local/bin
+RUN chown -R superset:superset /usr/local/bin/superset-init && \
+    chown -R superset:superset /usr/local/bin/superset-demo && \
+    chmod 0777 /usr/local/bin/superset-init && \
+    chmod 0777 /usr/local/bin/superset-demo
 VOLUME /home/superset \
        /etc/superset \
        /var/lib/superset
