@@ -33,6 +33,9 @@ RUN yum localinstall -y --nogpgcheck python-libs-2.7.12-8.el7.centos.x86_64.rpm 
 
 RUN yum clean all
 
+
+RUN pip2.7 install setuptools==44.0.0 avro==1.8.2 coverage redis protobuf==3.9.2 snakebite jsonpath numpy==1.16.4 pandas==0.24.2 requests psycopg2-binary sqlalchemy cityhash pyhwschema==0.0.2 avro_json_serializer pyproj==2.2.1
+
 ADD ./start.sh /start.sh
 
 
