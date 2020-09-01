@@ -26,15 +26,19 @@ RUN yum -y update
 RUN yum install -y wget python-pip
 RUN mkdir /tmp/python2.7.12
 WORKDIR /tmp/python2.7.12
-RUN wget {{custom_sw_url}}/python-2.7.12-centos7-x86_64.tar.gz
+RUN wget http://weespey.com/downloads/python-2.7.12-centos7-x86_64.tar.gz
 RUN tar -xvf python-2.7.12-centos7-x86_64.tar.gz
 RUN yum localinstall -y --nogpgcheck python-libs-2.7.12-8.el7.centos.x86_64.rpm python-2.7.12-8.el7.centos.x86_64.rpm python-devel-2.7.12-8.el7.centos.x86_64.rpm tkinter-2.7.12-8.el7.centos.x86_64.rpm python-tools-2.7.12-8.el7.centos.x86_64.rpm
 ###
 
+RUN yum install -y gcc
+RUN yum install -y gcc-c++
+
 RUN yum clean all
 
 
-RUN pip2.7 install setuptools==44.0.0 avro==1.8.2 coverage redis protobuf==3.9.2 snakebite jsonpath numpy==1.16.4 pandas==0.24.2 requests psycopg2-binary sqlalchemy cityhash pyhwschema==0.0.2 avro_json_serializer pyproj==2.2.1
+RUN pip2.7 install setuptools==44.0.0 avro==1.8.2 coverage redis protobuf==3.9.2 snakebite jsonpath numpy==1.16.4 pandas==0.24.2 requests psycopg2-binary sqlalchemy cityhash pyhwschema avro_json_serializer pyproj==2.2.1 wheel
+
 
 ADD ./start.sh /start.sh
 
@@ -77,6 +81,7 @@ RUN systemctl enable sshd.service
 VOLUME [ "/sys/fs/cgroup" ]
 VOLUME ["/run"]
 
+WORKDIR /
 RUN chmod 755 /start.sh
 RUN ./start.sh
 
