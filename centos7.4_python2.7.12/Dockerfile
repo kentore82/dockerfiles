@@ -38,9 +38,9 @@ RUN yum install -y python3 python3-libs python3-devel python3-pip
 RUN yum clean all
 
 
-RUN pip2.7 install setuptools==44.0.0 avro==1.8.2 coverage redis protobuf==3.9.2 snakebite jsonpath numpy==1.16.4 pandas==0.24.2 requests psycopg2-binary sqlalchemy cityhash pyhwschema avro_json_serializer pyproj==2.2.1 wheel pip==20.2.2
+RUN pip2.7 install setuptools==44.0.0 avro==1.8.2 coverage redis protobuf==3.9.2 snakebite jsonpath numpy==1.16.4 pandas==0.24.2 requests psycopg2-binary sqlalchemy cityhash pyhwschema avro_json_serializer pyproj==2.2.1 wheel pip==20.2.2 pytest
 
-RUN pip3 install setuptools avro==1.8.2 coverage redis protobuf snakebite jsonpath numpy pandas requests psycopg2-binary sqlalchemy cityhash avro_json_serializer pyproj wheel jupyterlab
+RUN pip3 install setuptools avro==1.8.2 coverage redis protobuf snakebite jsonpath numpy pandas requests psycopg2-binary sqlalchemy cityhash avro_json_serializer pyproj wheel jupyterlab pytest
 
 RUN pip2.7 install ipykernel==4.10.1
 
