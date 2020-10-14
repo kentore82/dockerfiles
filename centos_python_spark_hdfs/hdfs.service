@@ -1,0 +1,22 @@
+[Unit]
+Description=Hadoop DFS namenode and datanode
+After=syslog.target network.target
+
+[Service]
+User=root
+Group=root
+Type=forking
+ExecStart=/usr/local/hadoop/sbin/start-dfs.sh
+ExecStop=/usr/local/hadoop/sbin/stop-dfs.sh
+Environment=JAVA_HOME=/usr/lib/jvm/jre-openjdk
+Environment=HADOOP_HOME=/usr/local/hadoop
+Environment=HDFS_NAMENODE_USER=root
+Environment=HDFS_DATANODE_USER=root
+Environment=HDFS_SECONDARYNAMENODE_USER=root
+
+TimeoutStartSec=1min
+Restart=on-failure
+PIDFile=/tmp/hadoop-root-namenode.pid
+
+[Install]
+WantedBy=multi-user.target
