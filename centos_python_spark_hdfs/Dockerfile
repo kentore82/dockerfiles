@@ -91,6 +91,10 @@ ENV PYTHONPATH="${SPARK_HOME}/python:${SPARK_HOME}/python/lib/py4j-${py4j_versio
 # Permanently put pyspark on PYTHON_PATH
 RUN printf "${SPARK_HOME}/python\n${SPARK_HOME}/python/lib/py4j-${py4j_version}-src.zip\n" > /usr/local/lib/python${PYTHON_VERSION}/site-packages/spark_bindings.pth
 
+# Set spark env and conf
+ADD spark-env.sh ${SPARK_HOME}/conf/spark-env.sh
+ADD spark-defaults.conf ${SPARK_HOME}/conf/spark-defaults.conf
+
 # HDFS
 RUN wget "https://apache.uib.no/hadoop/common/hadoop-${HADOOP_VERSION}/hadoop-${HADOOP_VERSION}.tar.gz"  -P /tmp && \
     tar xzf "/tmp/hadoop-${HADOOP_VERSION}.tar.gz" -C /usr/local --owner root --group root --no-same-owner && \
